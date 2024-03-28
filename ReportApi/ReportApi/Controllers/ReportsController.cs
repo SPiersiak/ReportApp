@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using ReportInfrastructure.Query;
 using ReportInfrastructure.Services.Interfaces;
 
 namespace ReportApi.Controllers;
 [Route("api/reports")]
 [ApiController]
+[EnableCors("OpenCORSPolicy")]
 public class ReportsController : ControllerBase
 {
     private readonly IReportService _reportService;

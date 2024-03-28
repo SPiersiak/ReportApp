@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using ReportInfrastructure.Services.Interfaces;
 
 namespace ReportApi.Controllers;
-[Route("api/premises")]
 [ApiController]
+[Route("api/premises")]
+[EnableCors("OpenCORSPolicy")]
 public class PremiseController : ControllerBase
 {
     private readonly IPremiseService _premiseService;
@@ -14,7 +16,7 @@ public class PremiseController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get()
+    public async Task<IActionResult> GetPremises()
     {
         var result = await _premiseService.GetPremisesAsync();
 
