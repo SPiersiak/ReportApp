@@ -15,7 +15,7 @@ public static class ReportInfrastructureServiceCollection
 
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
-
         services.AddTransient<IReportService, ReportService>();
+        services.AddTransient<IPremiseService, PremiseService>();
     }
 }
