@@ -1,1 +1,70 @@
-<p>report works!</p>
+<div class="row">
+<div class="col-3">
+  <mat-form-field>
+    <mat-label>Lokal</mat-label>
+    <mat-select [formControl]="premiseFormControl">
+      <mat-option *ngFor="let premise of premiseResult" [value]="premise.id">{{premise.premiseName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Od</mat-label>
+    <input matInput [matDatepicker]="pickerFrom" [max]="maxValue" (dateChange)="handleDateFromOnChange($event)" [formControl]="dateFromControl">
+    <mat-datepicker-toggle matSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFrom></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Do</mat-label>
+    <input matInput [matDatepicker]="pickerTo" [min]="minValue" (dateChange)="handleDateToOnChange($event)" [formControl]="dateToControl">
+    <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+    <mat-datepicker #pickerTo></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-stroked-button (click)="confirmButtonOnClick($event)" >Zatwierdź</button>
+
+</div>
+<div class="col-9">
+  <div class="mat-elevation-z0">
+    <mat-table #table [dataSource]="reportData.dataCollection" class="w-100">
+
+        <ng-container matColumnDef="reportName">
+          <th mat-header-cell *matHeaderCellDef> Nazwa</th>
+          <td mat-cell *matCellDef="let report"> {{report.reportName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reportDate">
+          <th mat-header-cell *matHeaderCellDef> Data </th>
+          <td mat-cell *matCellDef="let report"> {{report.reportDate | date:'yyyy/MM/dd'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="reportTime">
+          <th mat-header-cell *matHeaderCellDef> Czas </th>
+          <td mat-cell *matCellDef="let report"> {{report.reportDate | date:'HH:mm'}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell *matHeaderCellDef> Użytkownik </th>
+          <td mat-cell *matCellDef="let report"> {{report.userName}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="premiseName">
+          <th mat-header-cell *matHeaderCellDef> Lokal </th>
+          <td mat-cell *matCellDef="let report"> {{report.premiseName}} </td>
+        </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </mat-table>
+    <mat-paginator
+      class="mb-2"
+      appStylePaginator
+      showFirstLastButtons
+      [length]="reportData.totalRecords"
+      [pageSize]="reportData.pageSize"
+      [pageSizeOptions]="[5, 10, 25, 100]"
+      (page)="onPaginateChange($event)">
+    </mat-paginator>
+  </div>
+</div>
+</div>

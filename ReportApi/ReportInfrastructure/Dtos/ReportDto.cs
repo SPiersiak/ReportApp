@@ -5,9 +5,7 @@ public class ReportDto
 
     public DateTime ReportDate { get; set; }
 
-    public TimeSpan ReportTime { get; set; }
-
     public string UserName { get; set; }
 
-    public string PremisesName { get; set; }
+    public string PremiseName { get; set; }
 }

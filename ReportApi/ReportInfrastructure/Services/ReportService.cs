@@ -26,7 +26,7 @@ public class ReportService : IReportService
 
         if (query.PremisesId.HasValue)
         {
-            resultQuery = resultQuery.Where(x => x.PremiseId == query.PremisesId.Value);
+            resultQuery = resultQuery.Where(x => x.PremiseId == query.PremisesId);
         }
 
         var result = new PaginnationPageResponseDto<ReportDto>();
@@ -39,14 +39,14 @@ public class ReportService : IReportService
 
         result.DataCollection = await resultQuery
             .AsNoTracking()
+            .OrderBy(o => o.Id)
             .Skip(skip).Take(query.PageSize)
             .Select(s => new ReportDto()
             {
                 ReportName = s.ReportName,
-                ReportDate = s.ReportDateTime.Date,
-                ReportTime = s.ReportDateTime.TimeOfDay,
+                ReportDate = s.ReportDateTime,
                 UserName = s.User.UserName,
-                PremisesName = s.Premise.PremiseName,
+                PremiseName = s.Premise.PremiseName,
             }).ToListAsync();
 
         return result;
